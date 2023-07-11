@@ -1,0 +1,29 @@
+body {
+    /* fallback for old browsers */
+    background: rgb(51, 22, 24);
+    padding-top: 10%;
+    padding-left: 18%;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgb(51, 22, 24), rgb(87, 66, 66));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgb(51, 22, 24), rgb(87, 66, 66))
+  }
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    }
+    .card-body{
+        background: transparent;
+        background-color: rgb(212, 205, 205);
+        padding: 20px 20px;
+        opacity: 0.7;
+        border-radius: 5%;
+    }
