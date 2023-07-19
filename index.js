@@ -22,10 +22,6 @@ app.post("/api/login", async (req, res) => {
   return login;
 });
 
-// app.get('/signOut', async (req, res) => {
-//     const resData = await serverless.signOut(req, res);
-//     return resData;
-// })
 
 const validateFirebaseIdToken = async (req, res, next) => {
   if (
@@ -71,13 +67,6 @@ app.get("/api/userdata", async (req, res) => {
   const getUserDet = serverless.getAllUsers(data, res);
   return getUserDet;
 });
-
-app.get("/api/quizAnswers/:id", async (req, res) => {
-  let data = { uid: req.params.id };
-  const result = serverless.getUserQuizAnswers(data, res);
-  return result;
-});
-
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
