@@ -12,15 +12,6 @@ app.use(cors({ origin: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post("/api/signup", async (req, res) => {
-  console.log('saoi==========')
-  const signUp = await serverless.signUp(req, res);
-  return signUp;
-});
-app.post("/api/login", async (req, res) => {
-  const login = await serverless.login(req, res);
-  return login;
-});
 
 
 const validateFirebaseIdToken = async (req, res, next) => {
@@ -44,6 +35,18 @@ const validateFirebaseIdToken = async (req, res, next) => {
     return;
   }
 };
+
+//API end points start here
+app.post("/api/signup", async (req, res) => {
+  const signUp = await serverless.signUp(req, res);
+  return signUp;
+});
+app.post("/api/login", async (req, res) => {
+  const login = await serverless.login(req, res);
+  return login;
+});
+
+
 app.use(validateFirebaseIdToken);
 
 
@@ -55,12 +58,10 @@ app.get("/api/userdata/:id", async (req, res) => {
 
 
 
-app.post("/api/refresh-token", async (req, res) => {
-  const userData = authData.refreshToken(req, res);
-  return userData;
-});
-
-
+// app.post("/api/refresh-token", async (req, res) => {
+//   const userData = authData.refreshToken(req, res);
+//   return userData;
+// });
 
 app.get("/api/userdata", async (req, res) => {
   let data = { req: req };

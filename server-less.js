@@ -58,36 +58,37 @@ exports.signUp = async (req, res) => {
   }
 };
 
-exports.refreshToken = async (req, res) => {
-  try {
-    let refreshToken = req.headers.authorization.split("Bearer ")[1];
-    // console.log(refreshToken, 'refreshTokenrefreshTokenrefreshTokenrefreshToken')
+// exports.refreshToken = async (req, res) => {
+//   try {
+//     let refreshToken = req.headers.authorization.split("Bearer ")[1];
+//     // console.log(refreshToken, 'refreshTokenrefreshTokenrefreshTokenrefreshToken')
 
-    const decodedToken = await admin.auth().verifyIdToken(refreshToken);
-    const uid = decodedToken.uid;
-    const token = await admin.auth().createCustomToken(uid);
-    //  console.log(token, 'useruseruseruseruseruseruseruser')
-    const userCred = await firebase
-      .signInWithCustomToken(uid, token)
-      //   console.log(userCred)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
+//     const decodedToken = await admin.auth().verifyIdToken(refreshToken);
+//     const uid = decodedToken.uid;
+//     const token = await admin.auth().createCustomToken(uid);
+//     //  console.log(token, 'useruseruseruseruseruseruseruser')
+//     const userCred = await firebase
+//       .signInWithCustomToken(uid, token)
+//       //   console.log(userCred)
+//       .then((userCredential) => {
+//         // Signed in
+//         var user = userCredential.user;
 
-        //console.log(user, 'useruseruseruseruseruseruseruser', userCredential)
-        return res.status(200).json({ data: token });
-        // ...
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-      });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
-};
+//         //console.log(user, 'useruseruseruseruseruseruseruser', userCredential)
+//         return res.status(200).json({ data: token });
+//         // ...
+//       })
+//       .catch((error) => {
+//         var errorCode = error.code;
+//         var errorMessage = error.message;
+//         // ...
+//       });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).json(err);
+//   }
+// };
+
 exports.login = async (req, res) => {
 const resdata = await authData.login(req, res)
 
