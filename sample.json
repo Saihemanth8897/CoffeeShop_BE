@@ -1,0 +1,447 @@
+{
+    "menu": {
+        "Drinks": {
+            "categories": [
+                {
+                    "id": "juice",
+                    "name": "Juices",
+                    "imageUrl": "/assets/juicecategory.jpg",
+                    "listOfItems": [
+                        {
+                            "category_id": "juice",
+                            "itemid": "Pinaple",
+                            "name": "Pinaple",
+                            "imageUrl": "/assets/pineapple_juice.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        },
+                        {
+                            "itemid": "Mango",
+                            "category_id": "juice",
+                            "name": "Mango",
+                            "imageUrl": "/assets/mango_juice.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "cool_drinks",
+                    "name": "Cool drinks",
+                    "imageUrl": "https://www.diantonioscatering.com/wp-content/uploads/2015/12/cooldrinks.jpg",
+                    "listOfItems": [
+                        {
+                            "category_id": "cool_drinks",
+                            "itemid": "Coca_cola",
+                            "name": "Coca cola",
+                            "imageUrl": "/assets/cocacola.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "20",
+                                    "size": "200ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "500ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "70",
+                                    "size": "1000ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        },
+                        {
+                            "category_id": "cool_drinks",
+                            "itemid": "ThumsUP",
+                            "name": "ThumsUP",
+                            "imageUrl": "/assets/ThumsUp.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "Food": {
+            "categories": [
+                {
+                    "id": "sandwitches",
+                    "name": "Sandwitches",
+                    "imageUrl": "https://t4.ftcdn.net/jpg/03/32/76/85/360_F_332768568_NCMldPxcZGGjMwoKm6EJlGGg8U9Ggqet.jpg",
+                    "listOfItems": [
+                        {
+                            "category_id": "sandwitches",
+                            "itemid": "Egg_SandWitch",
+                            "name": "Egg SandWitch",
+                            "imageUrl": "/assets/eggSandwitch.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        },
+                        {
+                            "category_id": "sandwitches",
+                            "itemid": "Veg_SandWitch",
+                            "name": "Veg SandWitch",
+                            "imageUrl": "/assets/vegSandwitch.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "pizzas",
+                    "name": "Pizzas",
+                    "DefaultSelectedSize": -1,
+                    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Pizza-3007395.jpg/440px-Pizza-3007395.jpg",
+                    "listOfItems": [
+                        {
+                            "category_id": "pizzas",
+                            "itemid": "Coca_cola",
+                            "name": "Coca cola",
+                            "sizes": [
+                                {
+                                    "price": "20",
+                                    "size": "200ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "500ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "70",
+                                    "size": "1000ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        },
+                        {
+                            "category_id": "pizzas",
+                            "itemid": "Mango",
+                            "name": "Mango",
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "main_course",
+                    "name": "Main Course",
+                    "imageUrl": "https://sundaysuppermovement.com/wp-content/uploads/2021/06/grilled-chicken-salad-1.jpg",
+                    "listOfItems": [
+                        {
+                            "category_id": "main_course",
+                            "itemid": "Paneer_Gravy",
+                            "name": "Paneer Gravy",
+                            "imageUrl": "/assets/paneerGravy.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "20",
+                                    "size": "200ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "500ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "70",
+                                    "size": "1000ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        },
+                        {
+                            "category_id": "main_course",
+                            "itemid": "MushRoom",
+                            "name": "MushRoom",
+                            "imageUrl": "/assets/mushroomGravy.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "chinese",
+                    "name": "Chinese",
+                    "imageUrl": "https://twtx.co/wp-content/uploads/2022/08/FADD4992-85E0-423A-BFFB-34E6890687B1-1024x769.jpeg",
+                    "listOfItems": [
+                        {
+                            "category_id": "chinese",
+                            "itemid": "Noodles",
+                            "name": "Noodles",
+                            "imageUrl": "/assets/Noodles.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "20",
+                                    "size": "200ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "500ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "70",
+                                    "size": "1000ml",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        },
+                        {
+                            "category_id": "chinese",
+                            "itemid": "Gobi_Manchurian",
+                            "name": "Gobi Manchurian",
+                            "imageUrl": "/assets/gobimanchurian.jpg",
+                            "DefaultSelectedSize": -1,
+                            "sizes": [
+                                {
+                                    "price": "30",
+                                    "size": "s",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "40",
+                                    "size": "m",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                },
+                                {
+                                    "price": "50",
+                                    "size": "l",
+                                    "unit": "1",
+                                    "discount": "0",
+                                    "availableInStock": true,
+                                    "isSelected": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

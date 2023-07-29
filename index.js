@@ -47,7 +47,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 
-app.use(validateFirebaseIdToken);
+// app.use(validateFirebaseIdToken);
 
 
 app.get("/api/userdata/:id", async (req, res) => {
@@ -65,9 +65,45 @@ app.get("/api/userdata/:id", async (req, res) => {
 
 app.get("/api/userdata", async (req, res) => {
   let data = { req: req };
-  const getUserDet = serverless.getAllUsers(data, res);
+  const getUserDet = await serverless.getAllUsers(data, res);
   return getUserDet;
 });
+app.get('/api/menu', async (req, res) => {
+  console.log('hgf')
+ const data =  await serverless.getMenuList(req, res)
+ return data
+})
+
+app.get('/api/:categrotyType/items', async (req, res) => {
+  console.log('hgf')
+ const data =  await serverless.getItemsByCategory(req.params.categrotyType, res)
+ return data
+})
+
+app.put('/api/:category', async (req, res) => {
+ const data =  await serverless.updateMenuCategory(req, res)
+ return data
+})
+app.post("/api/menu", async (req, res) => {
+  const menu_data = await serverless.menuData(req.body, res);
+  return menu_data;
+});
+
+
+
+app.post("/api/menu/listItems/create/item", async (req, res) => {
+  const menu_data = await serverless.categoryList(req.body, res);
+  return menu_data;
+});
+app.put("/api/:menu/:menuCategory/:categories", async (req, res) => {
+  let obj = {}
+ obj[req.params.menuCategory] = new Object(req.params.categories = [req.body])
+   let data = {collectionName: req.params.menu, data: obj}
+  console.log(data)
+  const menu_data = serverless.updateMenu(data, res);
+  return menu_data;
+});
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
