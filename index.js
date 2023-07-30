@@ -48,7 +48,11 @@ app.post("/api/login", async (req, res) => {
 
 
 // app.use(validateFirebaseIdToken);
-
+app.put("/api/create/:category/item", async (req, res) => {
+ let data = {type: req.params.category, addItem: req.body}
+  const menu_data = serverless.insertMenuItem(data, res);
+  return menu_data;
+});
 
 app.get("/api/userdata/:id", async (req, res) => {
   let data = { req: req.params.id };
@@ -58,24 +62,17 @@ app.get("/api/userdata/:id", async (req, res) => {
 
 
 
-// app.post("/api/refresh-token", async (req, res) => {
-//   const userData = authData.refreshToken(req, res);
-//   return userData;
-// });
-
 app.get("/api/userdata", async (req, res) => {
   let data = { req: req };
   const getUserDet = await serverless.getAllUsers(data, res);
   return getUserDet;
 });
 app.get('/api/menu', async (req, res) => {
-  console.log('hgf')
  const data =  await serverless.getMenuList(req, res)
  return data
 })
 
 app.get('/api/:categrotyType/items', async (req, res) => {
-  console.log('hgf')
  const data =  await serverless.getItemsByCategory(req.params.categrotyType, res)
  return data
 })
