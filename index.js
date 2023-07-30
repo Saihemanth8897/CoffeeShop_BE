@@ -81,6 +81,11 @@ app.put('/api/:category', async (req, res) => {
  const data =  await serverless.updateMenuCategory(req, res)
  return data
 })
+app.post('/api/:category', async (req, res) => {
+ const data =  await serverless.insertMenuCategory(req, res)
+ return data
+})
+
 app.post("/api/menu", async (req, res) => {
   const menu_data = await serverless.menuData(req.body, res);
   return menu_data;

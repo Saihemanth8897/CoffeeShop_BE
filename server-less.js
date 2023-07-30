@@ -373,6 +373,52 @@ exports.updateMenuCategory = async (req, res) => {
     console.error("Error updating document:", error);
   }
 };
+exports.insertMenuCategory = async (req, res) => {
+  try {
+    // Replace 'yourCollectionName' with the name of the collection you want to update
+
+    // Update the document with the provided data
+
+    let doc = await menu.doc(req.params.category).get();
+    const currentArray = doc.data()["categories"];
+    console.log(doc.data());
+    if (!currentArray || !Array.isArray(currentArray)) {
+      console.error("Invalid array field or no array exists in the document.");
+      return;
+    }
+
+    // Find the index of the item based on its ID in the array
+    const index = currentArray.findIndex((x) => x.id == req.body.id);
+
+    if (index === -1) {
+      // If the item ID is not found, add the new item to the categories array
+      const newArray = [...currentArray, req.body];
+      
+      // Update the document with the modified array
+      await menu.doc(req.params.category).update({
+        ["categories"]: newArray,
+      });
+      
+      console.log("New item added to the categories array.");
+    } else {
+      // If the item ID is found, update the existing item in the categories array
+      const newArray = [...currentArray];
+      newArray[index] = req.body;
+      
+      // Update the document with the modified array
+      await menu.doc(req.params.category).update({
+        ["categories"]: newArray,
+      });
+      
+      console.log("Existing item updated in the categories array.");
+    }
+
+    console.log("Document successfully updated.");
+  } catch (error) {
+    console.error("Error updating document:", error);
+  }
+};
+
 exports.insertMenuItem = async (req, res) => {
   try {
     let type = req.type;
