@@ -398,7 +398,10 @@ exports.insertMenuCategory = async (req, res) => {
       await menu.doc(req.params.category).update({
         ["categories"]: newArray,
       });
-      
+      res.status(200).json({
+        status: 200,
+        data:"New item added to the categories"
+      })
       console.log("New item added to the categories array.");
     } else {
       // If the item ID is found, update the existing item in the categories array
@@ -409,13 +412,20 @@ exports.insertMenuCategory = async (req, res) => {
       await menu.doc(req.params.category).update({
         ["categories"]: newArray,
       });
-      
+       res.status(200).json({
+        status: 200,
+        data:"Existing item updated in the categories array."
+      })
       console.log("Existing item updated in the categories array.");
     }
 
     console.log("Document successfully updated.");
   } catch (error) {
     console.error("Error updating document:", error);
+     res.status(500).json({
+        status: 500,
+        data:error
+      })
   }
 };
 
