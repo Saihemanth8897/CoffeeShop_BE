@@ -97,6 +97,7 @@ app.post("/api/menu/listItems/create/item", async (req, res) => {
   const menu_data = await serverless.categoryList(req.body, res);
   return menu_data;
 });
+
 app.put("/api/:menu/:menuCategory/:categories", async (req, res) => {
   let obj = {}
  obj[req.params.menuCategory] = new Object(req.params.categories = [req.body])
@@ -106,7 +107,12 @@ app.put("/api/:menu/:menuCategory/:categories", async (req, res) => {
   return menu_data;
 });
 
-
+//to get the item from list item by Id and section
+app.get("/api/menu/listItems/:section/:itemid", async (req, res) => {
+let data = {doc: req.params.section, itemid: req.params.itemid}
+  const menu_data = await serverless.getItemFromListItemByDocItemId(data, res);
+  return menu_data;
+});
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`server is running on PORT ${PORT}.`);
