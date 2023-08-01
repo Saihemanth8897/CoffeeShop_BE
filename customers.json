@@ -1,0 +1,230 @@
+[
+    {
+        "username": "Sai Hemanth",
+        "email": "sai@gmail.com",
+        "orderedItems": [
+            {
+                "itemId": "ChickenBiryani",
+                "imageUrl": "https://glebekitchen.com/wp-content/uploads/2019/12/chickenbiryanibowltop.jpg",
+                "name": "Chicken Biryani",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "Full",
+                    "price": 18,
+                    "availableInStock": true,
+                    "isSelected": 1,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Pinaple",
+                "imageUrl": "/assets/pineapple_juice.jpg",
+                "name": "Pinaple",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "m",
+                    "price": "40",
+                    "availableInStock": true,
+                    "isSelected": 3,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Mango",
+                "imageUrl": "/assets/mango_juice.jpg",
+                "name": "Mango",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "l",
+                    "price": "50",
+                    "availableInStock": true,
+                    "isSelected": 1,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Mango",
+                "imageUrl": "/assets/mango_juice.jpg",
+                "name": "Mango",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "s",
+                    "price": "30",
+                    "availableInStock": true,
+                    "isSelected": 2,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Orange",
+                "imageUrl": "https://www.indianhealthyrecipes.com/wp-content/uploads/2022/03/carrot-juice-recipe.jpg",
+                "name": "Orange",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "m",
+                    "price": 3.99,
+                    "availableInStock": true,
+                    "isSelected": 2,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            }
+        ]
+    },
+    {
+        "username": "Ashwini",
+        "email": "aswini@gmail.com",
+        "orderedItems": [
+            {
+                "itemId": "ChickenBiryani",
+                "imageUrl": "https://glebekitchen.com/wp-content/uploads/2019/12/chickenbiryanibowltop.jpg",
+                "name": "Chicken Biryani",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "Full",
+                    "price": 18,
+                    "availableInStock": true,
+                    "isSelected": 1,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Pinaple",
+                "imageUrl": "/assets/pineapple_juice.jpg",
+                "name": "Pinaple",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "m",
+                    "price": "40",
+                    "availableInStock": true,
+                    "isSelected": 3,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Mango",
+                "imageUrl": "/assets/mango_juice.jpg",
+                "name": "Mango",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "l",
+                    "price": "50",
+                    "availableInStock": true,
+                    "isSelected": 1,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Mango",
+                "imageUrl": "/assets/mango_juice.jpg",
+                "name": "Mango",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "s",
+                    "price": "30",
+                    "availableInStock": true,
+                    "isSelected": 2,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Orange",
+                "imageUrl": "https://www.indianhealthyrecipes.com/wp-content/uploads/2022/03/carrot-juice-recipe.jpg",
+                "name": "Orange",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "m",
+                    "price": 3.99,
+                    "availableInStock": true,
+                    "isSelected": 2,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            }
+        ]
+    },
+    {
+        "username": "Srilakshmi",
+        "email": "sri@gmail.com",
+        "orderedItems": [
+            {
+                "itemId": "ChickenBiryani",
+                "imageUrl": "https://glebekitchen.com/wp-content/uploads/2019/12/chickenbiryanibowltop.jpg",
+                "name": "Chicken Biryani",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "Full",
+                    "price": 18,
+                    "availableInStock": true,
+                    "isSelected": 1,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Pinaple",
+                "imageUrl": "/assets/pineapple_juice.jpg",
+                "name": "Pinaple",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "m",
+                    "price": "40",
+                    "availableInStock": true,
+                    "isSelected": 3,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Mango",
+                "imageUrl": "/assets/mango_juice.jpg",
+                "name": "Mango",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "l",
+                    "price": "50",
+                    "availableInStock": true,
+                    "isSelected": 1,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Mango",
+                "imageUrl": "/assets/mango_juice.jpg",
+                "name": "Mango",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "s",
+                    "price": "30",
+                    "availableInStock": true,
+                    "isSelected": 2,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            },
+            {
+                "itemId": "Orange",
+                "imageUrl": "https://www.indianhealthyrecipes.com/wp-content/uploads/2022/03/carrot-juice-recipe.jpg",
+                "name": "Orange",
+                "itemInfo": {
+                    "unit": "1",
+                    "size": "m",
+                    "price": 3.99,
+                    "availableInStock": true,
+                    "isSelected": 2,
+                    "discount": "0"
+                },
+                "NumberOfItems": 1
+            }
+        ]
+    }
+]

@@ -102,7 +102,7 @@ app.put("/api/:menu/:menuCategory/:categories", async (req, res) => {
   let obj = {}
  obj[req.params.menuCategory] = new Object(req.params.categories = [req.body])
    let data = {collectionName: req.params.menu, data: obj}
-  console.log(data)
+  
   const menu_data = serverless.updateMenu(data, res);
   return menu_data;
 });
@@ -113,6 +113,16 @@ let data = {doc: req.params.section, itemid: req.params.itemid}
   const menu_data = await serverless.getItemFromListItemByDocItemId(data, res);
   return menu_data;
 });
+app.post('/api/cart/customer_order', async (req, res) => {
+ 
+ const customers =  await serverless.createOrder(req, res)
+ return customers
+})
+
+app.get('/api/cart/customers_orders', async (req, res) => {
+ const customers =  await serverless.getOrdersByOrder(req, res)
+ return customers
+})
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`server is running on PORT ${PORT}.`);

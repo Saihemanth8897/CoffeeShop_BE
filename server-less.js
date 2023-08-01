@@ -1,9 +1,7 @@
 const admin = require("firebase-admin");
 const authData = require("./authControllers/auth");
 const credentials = require("./serviceAccountKey.json");
-const functions = require("firebase-functions");
-const firebase = require("firebase/auth");
-const _ = require("loadsh");
+
 let uuid = require("uuid");
 admin.initializeApp({
   credential: admin.credential.cert(credentials),
@@ -12,72 +10,11 @@ const db = admin.firestore();
 let userDetails = db.collection("userDetails");
 let menu = db.collection("menu");
 let listItems = db.collection("listItems");
+let customer_orders = db.collection("customerOrders");
 function isEmptyObj(obj) {
   return Object.keys(obj).length === 0;
 }
 
-// const insertNewItemsIfCollectionExists = async (collectionName, data) => {
-//   try {
-//     const collectionRef = db.collection(collectionName);
-
-//     for (const docId in data) {
-//       const documentRef = collectionRef.doc(docId);
-//       const docSnapshot = await documentRef.get();
-
-//       if (docSnapshot.exists) {
-//         const existingData = docSnapshot.data();
-//         console.log(existingData)
-//         if (collectionName === "menu") {
-//           if (Array.isArray(existingData.categories)) {
-//             // If the document already has a "categories" array, insert new categories into it
-//             await documentRef.update({
-//               categories: [...existingData.categories, ...data[docId]],
-//             });
-//             console.log(
-//               `New categories inserted into document "${docId}" in collection.`
-//             );
-//           } else {
-//             await documentRef.update({
-//               categories: data[docId],
-//             });
-//             console.log(
-//               `Categories set for document "${docId}" in collection.`
-//             );
-//           }
-//         } else if (collectionName === "listItems") {
-//           if (Array.isArray(existingData.data)) {
-//             await documentRef.update({
-//               data: [...existingData.data, data[docId]],
-//             });
-//             console.log(
-//               `New items inserted into document "${docId}" in collection.`
-//             );
-//           } else if (documentRef && documentRef.data) {
-//             await documentRef.update({
-//               data: [
-//                 existingData.data,
-//                 ...(Array.isArray(data[docId]) ? data[docId] : []),
-//               ],
-//             });
-//             console.log(`Items set for document "${docId}" in collection.`);
-//           } else if (
-//             collectionName === "listItems" &&
-//             !Array.isArray(data[docId])
-//           ) {
-//             await documentRef.update({
-//               data: [data[docId]],
-//             });
-//             console.log(`Items set for document "${docId}" in collection.`);
-//           }
-//         }
-//       }else{
-
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Error inserting new items:", error);
-//   }
-// };
 const insertNewItemsIfCollectionExists = async (collectionName, data) => {
   try {
     const collectionRef = db.collection(collectionName);
@@ -88,7 +25,7 @@ const insertNewItemsIfCollectionExists = async (collectionName, data) => {
 
       if (docSnapshot.exists) {
         const existingData = docSnapshot.data();
-        console.log(existingData);
+      
         if (collectionName === "menu") {
           if (Array.isArray(existingData.categories)) {
             // If the document already has a "categories" array, insert new categories into it
@@ -108,18 +45,20 @@ const insertNewItemsIfCollectionExists = async (collectionName, data) => {
           }
         } else if (collectionName === "listItems") {
           if (Array.isArray(existingData.data)) {
-            isExistedItem = existingData.data.findIndex((x) => x.itemid === data[docId].itemid)
-            if(isExistedItem == -1){
-               await documentRef.update({
-              data: [...existingData.data, data[docId]],
-            });
-            }else{
-              existingData.data[isExistedItem] = data[docId]
-               await documentRef.update({
-              data: [...existingData.data],
-            });
+            isExistedItem = existingData.data.findIndex(
+              (x) => x.itemid === data[docId].itemid
+            );
+            if (isExistedItem == -1) {
+              await documentRef.update({
+                data: [...existingData.data, data[docId]],
+              });
+            } else {
+              existingData.data[isExistedItem] = data[docId];
+              await documentRef.update({
+                data: [...existingData.data],
+              });
             }
-           
+
             console.log(
               `New items inserted into document "${docId}" in collection.`
             );
@@ -145,14 +84,20 @@ const insertNewItemsIfCollectionExists = async (collectionName, data) => {
         // If the document does not exist, create a new document with the provided data
         if (collectionName === "menu") {
           await documentRef.set({
-            categories: Array.isArray(data[docId]) ? data[docId] : [data[docId]],
+            categories: Array.isArray(data[docId])
+              ? data[docId]
+              : [data[docId]],
           });
-          console.log(`New document "${docId}" created with categories in collection.`);
+          console.log(
+            `New document "${docId}" created with categories in collection.`
+          );
         } else if (collectionName === "listItems") {
           await documentRef.set({
             data: Array.isArray(data[docId]) ? data[docId] : [data[docId]],
           });
-          console.log(`New document "${docId}" created with items in collection.`);
+          console.log(
+            `New document "${docId}" created with items in collection.`
+          );
         }
       }
     }
@@ -172,7 +117,7 @@ const checkAndCreateCollection = async (collectionName, data) => {
         break;
       }
     }
-console.log(collectionName, collectionExists)
+   
     if (!collectionExists) {
       const collectionRef = db.collection(collectionName);
 
@@ -202,7 +147,7 @@ console.log(collectionName, collectionExists)
 };
 exports.updateMenu = async (req, res) => {
   try {
-    console.log(req);
+   
     let resp = await checkAndCreateCollection(req.collectionName, req.data);
     res.status(200).json({
       status: 200,
@@ -229,6 +174,7 @@ exports.signUp = async (req, res) => {
   const reqsignUp = {
     email: req.body.email,
     password: req.body.password,
+    displayName: req.body.username,
     emailVerified: false,
     disabled: false,
   };
@@ -263,37 +209,6 @@ exports.signUp = async (req, res) => {
   }
 };
 
-// exports.refreshToken = async (req, res) => {
-//   try {
-//     let refreshToken = req.headers.authorization.split("Bearer ")[1];
-//     // console.log(refreshToken, 'refreshTokenrefreshTokenrefreshTokenrefreshToken')
-
-//     const decodedToken = await admin.auth().verifyIdToken(refreshToken);
-//     const uid = decodedToken.uid;
-//     const token = await admin.auth().createCustomToken(uid);
-//     //  console.log(token, 'useruseruseruseruseruseruseruser')
-//     const userCred = await firebase
-//       .signInWithCustomToken(uid, token)
-//       //   console.log(userCred)
-//       .then((userCredential) => {
-//         // Signed in
-//         var user = userCredential.user;
-
-//         //console.log(user, 'useruseruseruseruseruseruseruser', userCredential)
-//         return res.status(200).json({ data: token });
-//         // ...
-//       })
-//       .catch((error) => {
-//         var errorCode = error.code;
-//         var errorMessage = error.message;
-//         // ...
-//       });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json(err);
-//   }
-// };
-
 exports.login = async (req, res) => {
   const snapshot = await userDetails
     .where("username", "==", req.body.username)
@@ -301,7 +216,7 @@ exports.login = async (req, res) => {
   if (!snapshot.empty) {
     snapshot.forEach((doc) => {
       req.body["email"] = doc.data().emailId;
-      console.log(doc.data(), "sd");
+    
     });
     const resdata = await authData.login(req, res);
   } else {
@@ -360,13 +275,6 @@ exports.menuData = async (req, res) => {
       data: error,
     });
   }
-
-  //   if (req.type == "postquiz") {
-  //     let doc = await menu
-  //       .doc(req.req.drinks)
-  //       .update({ data: req.data.body });
-  // }
-  // res.status(200).json(req.data.body);
 };
 exports.getMenuList = (req, res) => {
   menu
@@ -384,8 +292,6 @@ exports.getMenuList = (req, res) => {
       let data = {};
       snapshot.forEach((doc) => {
         data[doc.id] = doc.data();
-        // doc.data() contains the document data
-        console.log(doc.id, "=>", doc.data());
       });
       return res.status(200).json({
         status: 200,
@@ -424,27 +330,20 @@ exports.getItemsByCategory = (req, res) => {
 
 exports.updateMenuCategory = async (req, res) => {
   try {
-    // Replace 'yourCollectionName' with the name of the collection you want to update
-
-    // Update the document with the provided data
-
     let doc = await menu.doc(req.params.category).get();
     const currentArray = doc.data()["categories"];
-    console.log(doc.data());
     if (!currentArray || !Array.isArray(currentArray)) {
-    
       await menu.doc(req.params.categor).update({
-     ["categories"]: res.body
-    });
+        ["categories"]: res.body,
+      });
       console.error("Invalid array field or no array exists in the document.");
       res.status(200).json({
         status: 200,
-        data:"New item added to the categories"
-      })
+        data: "New item added to the categories",
+      });
       return;
     }
 
-    // Find the index of the old value in the array
     const index = currentArray.indexOf((x) => x.id == req.body.id);
 
     if (index === -1) {
@@ -452,11 +351,9 @@ exports.updateMenuCategory = async (req, res) => {
       return;
     }
 
-    // Update the array with the new value
     const newArray = [...currentArray];
     newArray[index] = req.body;
 
-    // Update the document with the modified array
     await menu.doc(req.params.category).update({
       ["categories"]: newArray,
     });
@@ -466,75 +363,11 @@ exports.updateMenuCategory = async (req, res) => {
     console.error("Error updating document:", error);
   }
 };
-// exports.insertMenuCategory = async (req, res) => {
-//   try {
-//     // Replace 'yourCollectionName' with the name of the collection you want to update
-
-//     // Update the document with the provided data
-
-//     let doc = await menu.doc(req.params.category).get();
-//     const currentArray = doc.data()["categories"];
-//     console.log(doc.data());
-//     if (!currentArray || !Array.isArray(currentArray)) {
-//        await menu.doc(req.params.category).update({
-//         ["categories"]: res.body
-//       });
-//       console.error("Invalid array field or no array exists in the document.");
-//       res.status(200).json({
-//         status: 200,
-//         data:"New item added to the categories"
-//       })
-//       return;
-//     }
-
-//     // Find the index of the item based on its ID in the array
-//     const index = currentArray.findIndex((x) => x.id == req.body.id);
-
-//     if (index === -1) {
-//       // If the item ID is not found, add the new item to the categories array
-//       const newArray = [...currentArray, req.body];
-      
-//       // Update the document with the modified array
-//       await menu.doc(req.params.category).update({
-//         ["categories"]: newArray,
-//       });
-//       res.status(200).json({
-//         status: 200,
-//         data:"New item added to the categories"
-//       })
-//       console.log("New item added to the categories array.");
-//     } else {
-//       // If the item ID is found, update the existing item in the categories array
-//       const newArray = [...currentArray];
-//       newArray[index] = req.body;
-      
-//       // Update the document with the modified array
-//       await menu.doc(req.params.category).update({
-//         ["categories"]: newArray,
-//       });
-//        res.status(200).json({
-//         status: 200,
-//         data:"Existing item updated in the categories array."
-//       })
-//       console.log("Existing item updated in the categories array.");
-//     }
-
-//     console.log("Document successfully updated.");
-//   } catch (error) {
-//     console.error("Error updating document:", error);
-//      res.status(500).json({
-//         status: 500,
-//         data:error
-//       })
-//   }
-// };
 
 exports.insertMenuCategory = async (req, res) => {
   try {
-   
     let doc = await menu.doc(req.params.category).get();
     const currentArray = doc.data()["categories"];
-    console.log(doc.data());
     if (!currentArray || !Array.isArray(currentArray)) {
       const categoriesArray = req.body; // Replace with the correct property containing the categories array in req.body
 
@@ -597,14 +430,12 @@ exports.insertMenuItem = async (req, res) => {
     let type = req.type;
     let obj = {};
     obj[type] = req.addItem;
-    console.log("dsdf");
     let rest = await checkAndCreateCollection("listItems", obj);
 
     return res.status(200).json({
       status: 200,
       data: "Successfully created",
     });
-   
   } catch (err) {
     return res.status(500).json({
       status: 500,
@@ -614,30 +445,131 @@ exports.insertMenuItem = async (req, res) => {
 };
 
 exports.getItemFromListItemByDocItemId = async (req, res) => {
-  try{
-let dataList =  await listItems.doc(req.doc).get();
+  try {
+    let dataList = await listItems.doc(req.doc).get();
 
- dataList = await dataList.data();
- let result = await dataList.data.filter((x) => x.itemid == req.itemid)
- if(result){
-return  await res.status(200).json({
-  status: 200,
-  data: result[0],
-  message: "data Fetched Successfully"
- })
- }else{
-  return await res.status(400).json({
-    status: 400,
-    data: null,
-    message: "No data Found"
-  })
- }
-  }catch(err){
-return await res.status(500).json({
-    status: 500,
-    data: null,
-    message: err
-  })
+    dataList = await dataList.data();
+    let result = await dataList.data.filter((x) => x.itemid == req.itemid);
+    if (result) {
+      return await res.status(200).json({
+        status: 200,
+        data: result[0],
+        message: "data Fetched Successfully",
+      });
+    } else {
+      return await res.status(400).json({
+        status: 400,
+        data: null,
+        message: "No data Found",
+      });
+    }
+  } catch (err) {
+    return await res.status(500).json({
+      status: 500,
+      data: null,
+      message: err,
+    });
   }
- 
-}
+};
+
+exports.createOrder = async (req, res) => {
+  try {
+    const collections = await db.listCollections();
+    let collectionExists = false;
+
+    for (const collection of collections) {
+      if (collection.id === "customerOrders") {
+        collectionExists = true;
+        break;
+      }
+    }
+    if (!collectionExists) {
+      console.log('ad')
+      const collectionRef = db.collection("customerOrders");
+
+      collectionRef
+        .doc("list")
+        .set({
+          data: [req.body],
+        })
+        .then((res) => {
+          res.status(200).json({
+            status: 200,
+            data: null,
+            message: "Your order was placed successfully!",
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            status: 500,
+            data: null,
+            message: err+'j',
+          });
+        });
+    } else {
+      const collectionRef = db.collection("customerOrders");
+
+      const documentRef = collectionRef.doc("list");
+      const docSnapshot = await documentRef.get();
+
+      if (docSnapshot.exists) {
+        const existingData = docSnapshot.data();
+        if (existingData.data && existingData.data.length > 0) {
+          console.log('sasdfd')
+          await documentRef.update({
+            data: [...existingData.data, req.body],
+          }); //update
+        } else {
+          await documentRef.update({
+            data: [req.body],
+          });
+        }
+      } else {
+         const existingData = docSnapshot.data();
+       
+        if (existingData.data && existingData.data.length > 0) {
+          await documentRef.set({
+            data: [...existingData.data, req.body],
+          });
+        } else {
+          await documentRef.set({
+            data: [req.body],
+          });
+        }
+      }
+      res.status(200).json({
+        status: 200,
+        data: null,
+        message: "Your order was placed successfully!",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      status: 500,
+      data: null,
+      message: err,
+    });
+  }
+};
+exports.getOrdersByOrder = async (req, res) => {
+  try {
+    await customer_orders
+      .doc("list")
+      .get()
+      .then((result) => {
+        console.log('vvvv',result.data())
+        res.status(200).json({
+          status: 200,
+          data: result.data().data,
+         
+        });
+      })
+     
+  } catch (err) {
+    res.status(400).json({
+      status: 400,
+      data: null,
+      message: err,
+    });
+  }
+};
