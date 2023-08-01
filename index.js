@@ -47,7 +47,7 @@ app.post("/api/login", async (req, res) => {
 });
 
 
-// app.use(validateFirebaseIdToken);
+app.use(validateFirebaseIdToken);
 app.put("/api/create/:category/item", async (req, res) => {
  let data = {type: req.params.category, addItem: req.body}
   const menu_data = serverless.insertMenuItem(data, res);

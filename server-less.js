@@ -187,7 +187,11 @@ exports.signUp = async (req, res) => {
     lastUpdatedTime: new Date().toUTCString(),
   };
   try {
-    admin
+     const snapshot = await userDetails
+    .where("username", "==", req.body.username)
+    .get();
+  if (snapshot.empty) {
+ admin
       .auth()
       .createUser(reqsignUp)
       .then(async (data) => {
@@ -201,6 +205,13 @@ exports.signUp = async (req, res) => {
           data: error.message,
         });
       });
+  }else{
+     return res.status(400).json({
+      status: 400,
+      data: "User name is already taken. Please choose other username",
+    });
+  }
+   
   } catch (error) {
     return res.status(400).json({
       status: 400,
@@ -213,12 +224,22 @@ exports.login = async (req, res) => {
   const snapshot = await userDetails
     .where("username", "==", req.body.username)
     .get();
+    console.log(snapshot)
   if (!snapshot.empty) {
+    
     snapshot.forEach((doc) => {
       req.body["email"] = doc.data().emailId;
+       req.body["userdetails"] = doc.data()
     
     });
     const resdata = await authData.login(req, res);
+   
+    // resdata.data()['data']['userdetails'] = doc.data()
+    // return res.status(200).json({
+    //   status: 200,
+    //   data: resdata.data
+    // })
+   // const userData = await snapshot.docs[resdata.data.user.uid].data();
   } else {
     res
       .status(400)
