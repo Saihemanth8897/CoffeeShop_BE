@@ -54,6 +54,7 @@ app.put("/api/create/:category/item", async (req, res) => {
   return menu_data;
 });
 
+
 app.get("/api/userdata/:id", async (req, res) => {
   let data = { req: req.params.id };
   const getUser = serverless.getUser(data, res);
@@ -122,6 +123,20 @@ app.post('/api/cart/customer_order', async (req, res) => {
 app.get('/api/cart/customers_orders', async (req, res) => {
  const customers =  await serverless.getOrdersByOrder(req, res)
  return customers
+})
+
+app.post('/api/create/newNotification', async (req, res) => {
+  const customerNotification = await serverless.CreateUpdateNotificationList(req, res)
+  return customerNotification
+})
+
+app.get('/api/newNotifications', async (req, res) => {
+  const customerNotification = await serverless.getNotifications(req, res)
+  return customerNotification
+})
+app.get('/api/newNotifications/count', async (req, res) => {
+  const customerNotification = await serverless.getNotificationsCount(req, res)
+  return customerNotification
 })
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

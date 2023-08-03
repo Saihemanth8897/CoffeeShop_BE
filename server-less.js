@@ -224,7 +224,7 @@ exports.login = async (req, res) => {
   const snapshot = await userDetails
     .where("username", "==", req.body.username)
     .get();
-    console.log(snapshot)
+     //console.log(snapshot)
   if (!snapshot.empty) {
     
     snapshot.forEach((doc) => {
@@ -233,6 +233,7 @@ exports.login = async (req, res) => {
     
     });
     const resdata = await authData.login(req, res);
+    console.log(resdata)
    
     // resdata.data()['data']['userdetails'] = doc.data()
     // return res.status(200).json({
@@ -449,6 +450,7 @@ exports.insertMenuCategory = async (req, res) => {
 exports.insertMenuItem = async (req, res) => {
   try {
     let type = req.type;
+    console.log(type)
     let obj = {};
     obj[type] = req.addItem;
     let rest = await checkAndCreateCollection("listItems", obj);
@@ -464,6 +466,12 @@ exports.insertMenuItem = async (req, res) => {
     });
   }
 };
+
+// exports.updateMenuItem = aync(req, res)=> {
+//   try {
+//     let itemData = await listItems.doc(req.doc).get();
+//   }
+// }
 
 exports.getItemFromListItemByDocItemId = async (req, res) => {
   try {
@@ -493,6 +501,263 @@ exports.getItemFromListItemByDocItemId = async (req, res) => {
   }
 };
 
+async function UpdateTheQuantity(req) { //itemInfo
+    await req.body.orderedItems.forEach(async (product) => {
+           const docRef = db.collection("listItems").doc(product.category_id);
+    const doc = await docRef.get();
+      const currentData = doc.exists ? doc.data().data : [];
+      if (currentData.length > 0) {
+          const itemToUpdate = currentData.find((item) => item.itemid === product.itemId);
+
+          if (!itemToUpdate) {
+            console.error(`Item "${product.name}" not found in the menu.`);
+            return;
+          }
+        const sizeObjectToUpdateIndex = itemToUpdate.sizes.findIndex((sizeObj) => sizeObj.size === product.itemInfo.size);
+        if (Number(itemToUpdate.sizes[sizeObjectToUpdateIndex].inStockQty) >= Number(product.itemInfo.isSelected)) {
+           itemToUpdate.sizes[sizeObjectToUpdateIndex].inStockQty = String(Number(itemToUpdate.sizes[sizeObjectToUpdateIndex].inStockQty) - Number(product.itemInfo.isSelected))
+          const itemToUpdateIdx = currentData.findIndex((item) => item.itemid === product.itemId);
+          currentData[itemToUpdateIdx] = itemToUpdate
+          await docRef.set({ data: currentData });
+          console.log('item updated')
+        
+        } else {
+           console.error(`Item "${product.name}" not found in the menu.`);
+            return throwError(`${product.name}" is have only available ${itemToUpdate.sizes[sizeObjectToUpdateIndex].inStockQty} Items InStoct.`)
+        }
+
+      }
+       
+          })
+}
+
+// exports.CreateUpdateNotificationList = async (req, res) => {
+  
+//    try {
+//     const collections = await db.listCollections();
+//     let collectionExists = false;
+
+//     for (const collection of collections) {
+//       if (collection.id === "notificationList") {
+//         collectionExists = true;
+//         break;
+//       }
+//     }
+//     if (!collectionExists) {
+//     console.log('dsfgd')
+//       const collectionRef = db.collection("notificationList");
+//       console.log('asfd')
+//       const docRef = collectionRef.doc("list")
+//       docRef.set({
+//           data:[
+//           req.body
+//           ]})
+//         .then(async (result) => { //category_id
+          
+//           res.status(200).json({
+//             status: 200,
+//             data: null,
+//             message: "Your order was Notifies To Manager successfully!",
+//           });
+//         })
+//         .catch((err) => {
+//           res.status(500).json({
+//             status: 500,
+//             data: null,
+//             message: err,
+//           });
+//         });
+//     } else {
+//       const collectionRef = db.collection("notificationList");
+
+//       const documentRef = collectionRef.doc("list");
+//       const docSnapshot = await documentRef.get();
+
+//       if (docSnapshot.exists) {
+//         const existingData = docSnapshot.data();
+//         if (existingData.data && existingData.data.length > 0) {
+//           await documentRef.update([...existingData.data, req.body]); //update
+//         } else {
+//           await documentRef.update([req.body]);
+//         }
+//       } else {
+//          const existingData = docSnapshot.data();
+       
+//         if (existingData.data && existingData.data > 0) {
+//           await documentRef.set([...existingData.data, req.body]);
+//         } else {
+//           await documentRef.set([req.body]);
+//         }
+//       }
+   
+//       res.status(200).json({
+//         status: 200,
+//         data: null,
+//         message: "Your order was placed successfully!",
+//       });
+//     }
+//    } catch (err) {
+//      console.log('er', err)
+//     res.status(500).json({
+//       status: 500,
+//       data: null,
+//       message: err,
+//     });
+//   }
+// }
+
+exports.CreateUpdateNotificationList = async (req, res) => {
+  try {
+    console.log(req.body)
+    const collections = await db.listCollections();
+    let collectionExists = false;
+
+    for (const collection of collections) {
+      if (collection.id === "notificationList") {
+        collectionExists = true;
+        break;
+      }
+    }
+
+    if (!collectionExists) {
+      const collectionRef = await db.collection("notificationList");
+      const docRef = await collectionRef.doc("list");
+
+      // await docRef.set({
+      //   data: [req.body],
+      // });
+      
+       await docRef.create({
+            data:req.body ? [req.body]:[],
+          })
+
+      return res.status(200).json({
+        status: 200,
+        data: null,
+        message: "Your order was Notifies To Manager successfully!",
+      });
+    } else {
+      const collectionRef = db.collection("notificationList");
+      const documentRef = await collectionRef.doc("list");
+      const docSnapshot = await documentRef.get();
+
+      if (docSnapshot.exists) {
+        const existingData = docSnapshot.data();
+        let newData = [];
+
+        if (existingData && existingData.data && existingData.data.length > 0) {
+          newData = [...existingData.data, req.body];
+        } else {
+          newData = [req.body];
+        }
+
+        await documentRef.update({
+          data: newData,
+        });
+      } else {
+        // If the document doesn't exist, create a new one with the given data
+        await documentRef.set({
+          data: [req.body],
+        });
+      }
+
+      res.status(200).json({
+        status: 200,
+        data: null,
+        message: "Your order was placed successfully!",
+      });
+    }
+  } catch (err) {
+    console.log('Error:', err);
+    res.status(500).json({
+      status: 500,
+      data: null,
+      message: "Internal Server Error",
+    });
+  }
+}
+
+exports.getNotificationsCount = async (req, res) => {
+  try {
+   
+    const collectionRef = db.collection("notificationList");
+    const result = await collectionRef.doc("list").get();
+    if (result.exists) {
+     
+      return res.status(200).json({
+        status: 200,
+        data: result.data().data.length,
+        message: 'Notifications are available'
+      });
+    } else {
+      return res.status(200).json({
+        status: 200,
+        data: null,
+        message: 'No Notifications are available'
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      status: 400,
+      data: null,
+      message: error.message,
+    });
+  }
+}
+
+exports.getNotifications = async (req, res) => {
+  try {
+    const collections = await db.listCollections();
+    let collectionExists = false;
+
+    for (const collection of collections) {
+      if (collection.id === "notificationList") {
+        collectionExists = true;
+        break;
+      }
+    }
+      const collectionRef = db.collection("notificationList");
+    if (!collectionExists) {
+      await collectionRef.doc("list").set([])
+       return  res.status(200).json({
+            status: 200,
+            data: [],
+           message: 'No Notifications are available'
+          })
+    } else {
+     
+
+      const documentRef = collectionRef.doc("list");
+      const docSnapshot = await documentRef.get();
+
+      if (docSnapshot.exists) {
+        const existingData = docSnapshot.data();
+        if (existingData.data) {
+         await collectionRef.doc("list").set({
+              data: []
+            })
+          return  res.status(200).json({
+            status: 200,
+            data: existingData.data,
+           message: 'data fetched'
+          }) 
+        }
+      } else {
+         return  res.status(200).json({
+            status: 200,
+            data: [],
+           message: 'No Notifications are available'
+          })
+      }
+    }
+  }
+  catch (err) {
+    res.status(500).json({
+      status: 500, 
+      message: err
+    })
+  }
+}
 exports.createOrder = async (req, res) => {
   try {
     const collections = await db.listCollections();
@@ -513,7 +778,8 @@ exports.createOrder = async (req, res) => {
         .set({
           data: [req.body],
         })
-        .then((res) => {
+        .then(async (result) => { //category_id
+          await UpdateTheQuantity(req)
           res.status(200).json({
             status: 200,
             data: null,
@@ -536,7 +802,6 @@ exports.createOrder = async (req, res) => {
       if (docSnapshot.exists) {
         const existingData = docSnapshot.data();
         if (existingData.data && existingData.data.length > 0) {
-          console.log('sasdfd')
           await documentRef.update({
             data: [...existingData.data, req.body],
           }); //update
@@ -558,6 +823,7 @@ exports.createOrder = async (req, res) => {
           });
         }
       }
+     await UpdateTheQuantity(req)
       res.status(200).json({
         status: 200,
         data: null,
@@ -578,7 +844,7 @@ exports.getOrdersByOrder = async (req, res) => {
       .doc("list")
       .get()
       .then((result) => {
-        console.log('vvvv',result.data())
+   
         res.status(200).json({
           status: 200,
           data: result.data().data,
